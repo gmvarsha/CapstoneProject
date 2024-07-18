@@ -12,6 +12,8 @@ const AdminHome = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'];
   const [errorMessage, setErrorMessage] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -105,6 +107,13 @@ const AdminHome = () => {
     localStorage.removeItem('userId');
     navigate('/user/login');
   };
+  const handleHelp = () => {
+    navigate('/admin/help');
+  };
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (formData.source === formData.destination) {
@@ -146,11 +155,35 @@ const AdminHome = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link style={{color:"white"}}  onClick={handleLogout}>Logout</Nav.Link>
+              {/* <Nav.Link style={{color:"white"}}  onClick={handleLogout}>Logout</Nav.Link> */}
+              <Nav.Link style={{color:"white"}} onClick={handleMenuToggle}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
+                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
+                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
+                </div>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      {menuOpen && (
+        <div style={{
+          position: 'absolute',
+          top: '50px',
+          right: '10px',
+          background: 'white',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          zIndex: 1000
+        }}>
+          <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
+
+            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>
+            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
+          </ul>
+        </div>
+      )}
       <Container className="py-4">
         <h2 className="text-center mb-3" style={{ fontSize: '1.5rem' }}>Available Flights</h2>
         <div style={{"maxHeight": "350px","overflowY": 'auto'}}>
