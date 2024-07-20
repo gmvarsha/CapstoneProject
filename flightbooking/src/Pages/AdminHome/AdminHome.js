@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Container, Table, Button, Navbar, Nav, Alert, Modal, Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import CustomNavbar from '../../components/Navbar';
 
 const AdminHome = () => {
   const [flights, setFlights] = useState([]);
@@ -12,7 +13,6 @@ const AdminHome = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'];
   const [errorMessage, setErrorMessage] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,10 +24,15 @@ const AdminHome = () => {
     departureTime: '',
     arrivalDate: '',
     arrivalTime: '',
-    price: ''
+    price: '',
+    stops:'',
+        flightType:'',
+        seats:''
   });
   const [deleteFlightId, setDeleteFlightId] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const modalRef = useRef(null); // Reference for the modal element
+
 
   useEffect(() => {
     axios
@@ -37,7 +42,14 @@ const AdminHome = () => {
       })
       .catch((error) => console.error('Error fetching flights:', error));
   }, []);
-
+  useEffect(() => {
+    if (errorMessage) {
+      const modalBody = document.querySelector('.modal-body'); // Adjust selector based on your modal structure
+      if (modalBody) {
+        modalBody.scrollTop = 0; // Scroll to the top of the modal body
+      }
+    }
+  }, [errorMessage]);
   const handleModalOpen = (flight = null) => {
     if (flight) {
       setIsUpdate(true);
@@ -50,7 +62,10 @@ const AdminHome = () => {
         departureTime: flight.departureTime,
         arrivalDate: flight.arrivalDate,
         arrivalTime: flight.arrivalTime,
-        price: flight.price
+        price: flight.price,
+        stops:flight.stops,
+        flightType:flight.flightType,
+        seats:flight.seats
       });
     } else {
       setIsUpdate(false);
@@ -62,7 +77,10 @@ const AdminHome = () => {
         departureTime: '',
         arrivalDate: '',
         arrivalTime: '',
-        price: ''
+        price: '',
+        stops:'',
+        flightType:'',
+        seats:''
       });
     }
     setIsModalOpen(true);
@@ -81,7 +99,7 @@ const AdminHome = () => {
   const confirmDeleteFlight = async () => {
     try {
       await axios.delete(`http://localhost:8081/flights/deleteflight/${deleteFlightId}`);
-      setFlights(flights.filter(flight => flight.id !== deleteFlightId));
+      setFlights(flights.filter(flight => flight.flightId !== deleteFlightId));
       setSuccessMessage('Flight deleted successfully.');
       setTimeout(() => setSuccessMessage(''), 3000)
     } catch (error) {
@@ -101,18 +119,10 @@ const AdminHome = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-    console.log(formData,"//////")
+    console.log(formData,";;;;;")
+
   };
-  const handleLogout = () => {
-    localStorage.removeItem('userId');
-    navigate('/user/login');
-  };
-  const handleHelp = () => {
-    navigate('/admin/help');
-  };
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -122,71 +132,58 @@ const AdminHome = () => {
 
       return;
     }
-    console.log("inssss")
+    var [hours1, minutes1] = formData.departureTime.split(':').map(Number);
+    var [hours2, minutes2] = formData.arrivalTime.split(':').map(Number);
+    var difference_hours = hours2 - hours1;
+    console.log(difference_hours)
+    if (formData.departureDate == formData.arrivalDate && difference_hours < 1) {
+      setErrorMessage('Difference between departure and arrival time should be atleast 1hr ');
+      setTimeout(() => setErrorMessage(''), 5000)
+      return;
+
+    }
+
+    console.log(errorMessage, formData)
     try {
       if (isUpdate) {
-        const response =await axios.put(`http://localhost:8081/flights/updateflight/${currentFlight.id}`, formData);
-        console.log(response,"??????")
+        const response = await axios.put(`http://localhost:8081/flights/updateflight/${currentFlight.flightId}`, formData);
+        console.log(response, "??????")
 
-        setFlights(flights.map(flight => (flight.id === currentFlight.id ? { ...flight, ...formData } : flight)));
+        setFlights(flights.map(flight => (flight.flightId === currentFlight.flightId ? { ...flight, ...formData } : flight)));
         setSuccessMessage('Flight updated successfully.');
-      } else {
+        handleModalClose();
+
+      } else if (!isUpdate) {
         const response = await axios.post('http://localhost:8081/flights/addflight', formData);
-        console.log(response.data,"klflkhfkl")
-        setFlights( response.data);
+        console.log(response.data, "klflkhfkl")
+        setFlights(response.data);
         setSuccessMessage('Flight added successfully.');
+
       }
+
       setTimeout(() => setSuccessMessage(''), 3000);
       handleModalClose();
+
+
     } catch (error) {
       console.error('Error:', error);
     }
   };
-
+  const stops = ['Non-stop', 'Single stop', 'Two stops']
+  const flightTypes = ["Type1", 'Type2']
+  const today = new Date().toISOString().split('T')[0];
   return (
     <div style={{
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
       minHeight: '100vh',
       color: '#000',
     }}>
-      <Navbar bg="dark" variant="dark">
-        <Container fluid>
-          <Navbar.Brand href="#home" className="ms-0 me-auto">Flight Booking App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              {/* <Nav.Link style={{color:"white"}}  onClick={handleLogout}>Logout</Nav.Link> */}
-              <Nav.Link style={{color:"white"}} onClick={handleMenuToggle}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                </div>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {menuOpen && (
-        <div style={{
-          position: 'absolute',
-          top: '50px',
-          right: '10px',
-          background: 'white',
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-          borderRadius: '8px',
-          zIndex: 1000
-        }}>
-          <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
 
-            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>
-            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
-          </ul>
-        </div>
-      )}
+      <CustomNavbar role='Admin' />
+
       <Container className="py-4">
         <h2 className="text-center mb-3" style={{ fontSize: '1.5rem' }}>Available Flights</h2>
-        <div style={{"maxHeight": "350px","overflowY": 'auto'}}>
+        <div style={{ "maxHeight": "350px", "overflowY": 'auto' }}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -198,14 +195,18 @@ const AdminHome = () => {
                 <th>Departure Time</th>
                 <th>Arrival Date</th>
                 <th>Arrival Time</th>
+                <th>Seats</th>
+                <th>Stops</th>
+                <th>Type</th>
                 <th>Price</th>
+
                 <th></th>
                 <th></th>
               </tr>
             </thead>
-            {console.log(flights,"lllllllll--")}
+            {console.log(flights, "lllllllll--")}
             <tbody>
-              {flights.map((flight,index) => (
+              {flights.map((flight, index) => (
                 <tr key={index}>
                   {/* <td>{flight.id}</td> */}
                   <td>{flight.flightNumber}</td>
@@ -215,31 +216,36 @@ const AdminHome = () => {
                   <td>{flight.departureTime}</td>
                   <td>{flight.arrivalDate}</td>
                   <td>{flight.arrivalTime}</td>
+                  <td>{flight.seats}</td>
+                  <td>{flight.stops}</td>
+                  <td>{flight.flightType}</td>
+
                   <td>{flight.price}</td>
                   <td>
                     <Button variant="info" onClick={() => handleModalOpen(flight)}>Update</Button>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={() => handleDeleteFlight(flight.id)}>Delete</Button>
+                    <Button variant="danger" onClick={() => handleDeleteFlight(flight.flightId)}>Delete</Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </div>
-        <br/>
+        <br />
         <Row className="justify-content-center">
           <Col xs="auto">
             <Button variant="primary" onClick={() => handleModalOpen()}>Add</Button>
           </Col>
         </Row>
 
-        <Modal show={isModalOpen} onHide={handleModalClose} dialogClassName="modal-90w">
+        <Modal show={isModalOpen} onHide={handleModalClose} dialogClassName="modal-70w">
           <Modal.Header closeButton>
             <Modal.Title>{isUpdate ? 'Update Flight' : 'Add New Flight'}</Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ maxHeight: 'calc(100vh - 130px)', overflowY: 'auto' }}>
-          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+
             <Form onSubmit={handleFormSubmit}>
               <Form.Group controlId="formFlightNumber">
                 <Form.Label>Flight Number</Form.Label>
@@ -265,7 +271,7 @@ const AdminHome = () => {
               </Form.Group>
               <Form.Group controlId="formDepartureDate">
                 <Form.Label>Departure Date</Form.Label>
-                <Form.Control type="date" name="departureDate" value={formData.departureDate} onChange={handleFormChange} required />
+                <Form.Control type="date" name="departureDate" min={today} value={formData.departureDate} onChange={handleFormChange} required />
               </Form.Group>
               <Form.Group controlId="formDepartureTime">
                 <Form.Label>Departure Time</Form.Label>
@@ -273,17 +279,41 @@ const AdminHome = () => {
               </Form.Group>
               <Form.Group controlId="formArrivalDate">
                 <Form.Label>Arrival Date</Form.Label>
-                <Form.Control type="date" name="arrivalDate" value={formData.arrivalDate} onChange={handleFormChange} required />
+                <Form.Control type="date" name="arrivalDate" min={formData.departureDate} value={formData.arrivalDate} onChange={handleFormChange} required />
               </Form.Group>
               <Form.Group controlId="formArrivalTime">
                 <Form.Label>Arrival Time</Form.Label>
                 <Form.Control type="time" name="arrivalTime" value={formData.arrivalTime} onChange={handleFormChange} required />
               </Form.Group>
+              <Form.Group controlId="formSeats">
+                <Form.Label>Seats</Form.Label>
+                <Form.Control type="number" name="seats" value={formData.seats} onChange={handleFormChange} required />
+              </Form.Group>
+              <Form.Group controlId="formStops">
+                <Form.Label>Stop Type</Form.Label>
+                <Form.Select name="stops" value={formData.stops} onChange={handleFormChange} required>
+                  <option value="">Select stop</option>
+                  {stops.map((s, index) => (
+                    <option key={index} value={s}>{s}</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group controlId="formType">
+                <Form.Label>Flight Type:</Form.Label>
+                <Form.Select name="flightType" value={formData.flightType} onChange={handleFormChange} required>
+                  <option value="">Select Flight Type</option>
+                  {flightTypes.map((type, index) => (
+                    <option key={index} value={type}>{type}</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
               <Form.Group controlId="formPrice">
                 <Form.Label>Price</Form.Label>
                 <Form.Control type="number" name="price" value={formData.price} onChange={handleFormChange} required />
               </Form.Group>
-              <Button variant="primary" type="submit">{isUpdate ? 'Update' : 'Add'}</Button>
+              <Modal.Footer style={{ justifyContent: 'center' }}>
+                <Button variant="primary" style={{ alignItems: 'center' }} type="submit">{isUpdate ? 'Update' : 'Add'}</Button>
+              </Modal.Footer>
             </Form>
           </Modal.Body>
         </Modal>

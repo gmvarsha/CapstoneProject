@@ -20,8 +20,8 @@ function App() {
           <Route exact path="/user/login" element={<Login/>} />
           <Route path="/user/signup" element={<UserSignUp/>} />
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
-         <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} />} />
-          <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />} />} />
+         <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
+          <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
          {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
          {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
          {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}
