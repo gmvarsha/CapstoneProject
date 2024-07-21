@@ -28,6 +28,12 @@ const CustomNavbar = ({ role }) => {
       const handleMyBookings = () => {
         navigate('/user/mybookings');
       };
+      const handleUserQueries = () => {
+        navigate('/admin/Queries');
+      };
+      const handleMyQueries = () => {
+        navigate('/user/myQueries');
+      };
   return (
     <div>
     <Navbar bg="dark" variant="dark">
@@ -60,6 +66,9 @@ const CustomNavbar = ({ role }) => {
           <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
             {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyBookings}>My Bookings</li>}
             {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>}
+            {role=='Admin' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleUserQueries}>Queries</li>}
+            {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyQueries}>My Queries</li>}
+
             <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
           </ul>
         </div>

@@ -10,6 +10,8 @@ import UserSignUp from './Pages/SignUp/UserSignUp';
 import UserBooking from './Pages/UserBooking/User';
 import ProtectedRoute from './Pages/Login/ProtectedRoute';
 import UserQuery from './Pages/UserQuery/UserQuery';
+import AdminReply from './Pages/AdminReply/AdminReply';
+import MyQuery from './Pages/MyQuery/MyQuery';
 
 
 
@@ -25,6 +27,9 @@ function App() {
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
           <Route path="/user/help" element={<UserQuery/>}/>
+          <Route path="/admin/queries" element={<AdminReply/>}/>
+          <Route path="/user/myQueries" element={<MyQuery/>}/>
+
 
 
          {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
