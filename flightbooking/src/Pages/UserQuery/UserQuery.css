@@ -1,12 +1,12 @@
-.app-container {
+/* .userQuery-userQueryContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-size: cover;
   color: #fff;
-}
+} */
 
-.app-header {
+.userQuery-header {
   
   padding: 5px;
   text-align: center;
@@ -14,25 +14,25 @@
 
 }
 
-.app-header h1 {
+.userQuery-header h1 {
   margin: 0;
   font-size: 1.5rem;
   color: #fff;
 }
 
-.app-footer {
+.userQuery-footer {
   background-color: rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: 10px 0;
   margin-top: auto;
 }
 
-.app-footer p {
+.userQuery-footer p {
   margin: 0;
   color: #fff;
 }
 
-.container {
+.userQueryContainer {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
@@ -40,50 +40,47 @@
   border-radius: 8px;
 }
 
-h2, h3 {
-  color: #333;
-  font-family: 'Arial', sans-serif;
-}
 
-.card {
+
+.userQueryCard {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 
-.form-group {
+.userQueryForm-group {
   margin-bottom: 1rem;
 }
 
-.form-control {
+.userQueryForm-control {
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-.form-control:focus {
+.userQueryForm-control:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-.btn {
+.userQueryBtn {
   font-size: 1rem;
   padding: 10px 20px;
 }
 
-.btn-link {
+.userQueryBtn-link {
   font-size: 1.1rem;
 }
 
-.alert {
+.userQueryAlert {
   margin-top: 20px;
 }
 
-.card-header {
+.userQueryCard-header {
   background-color: #f7f7f7;
 }
 
-.card-header button {
+.userQueryCard-header button {
   width: 100%;
   text-align: left;
   padding: 10px;
@@ -92,23 +89,23 @@ h2, h3 {
   color: #007bff;
 }
 
-.card-header button:focus {
+.userQueryCard-header button:focus {
   outline: none;
 }
 
-.card-body {
+.userQueryCard-body {
   background-color: #f9f9f9;
 }
 
-#faqAccordion .card-header {
+#faqAccordion .userQueryCard-header {
   cursor: pointer;
 }
 
-#faqAccordion .card-header:hover {
+#faqAccordion .userQueryCard-header:hover {
   background-color: #f1f1f1;
 }
 
-#faqAccordion .card-body {
+#faqAccordion .userQueryCard-body {
   padding: 15px;
   border-top: 1px solid #ddd;
 }

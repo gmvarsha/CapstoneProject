@@ -96,7 +96,7 @@ const UserSignUp = () => {
         padding: '20px',
       }}
     >
-      <div className="card shadow" style={{ width: '100%', maxWidth: '300px', backgroundColor: '#f7c6c5', padding: '20px', borderRadius: '10px' }}>
+      <div className="card shadow" style={{ width: '100%', maxWidth: '350px', backgroundColor: '#f7c6c5', padding: '20px', borderRadius: '10px' }}>
         <h2 className="card-title text-center mb-4" style={{ fontSize: '1.5rem' }}>User Sign Up</h2>
         {error && <div className="alert alert-danger text-center">{error}</div>}
         <form onSubmit={handleSubmit}>

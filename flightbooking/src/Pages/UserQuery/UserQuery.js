@@ -68,37 +68,37 @@ const UserQuery = () => {
     }}>    
       <CustomNavbar role='User' />
       
-        <h1 className="app-header">Flight Booking Support</h1>
+        <h1 className="userQuery-header">Flight Booking Support</h1>
 
-      <div className="container mt-5">
-        <div className="card p-4 shadow-sm mb-5">
+      <div className="userQueryContainer mt-5">
+        <div className="userQueryCard p-4 shadow-sm mb-5">
           <h2 className="text-center mb-1">Ask a Question?</h2>
-          {success && <div className="alert alert-success">Query submitted successfully!</div>}
-          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="userQueryAlert alert-success">Query submitted successfully!</div>}
+          {error && <div className="userQueryAlert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
+            <div className="userQueryForm-group">
               <label htmlFor="query">Your Query</label>
               <textarea
                 id="query"
-                className="form-control"
+                className="userQueryForm-control"
                 value={query}
                 onChange={handleQueryChange}
                 rows="5"
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary mt-3">Submit</button>
+            <button type="submit" className="userQueryBtn btn-primary mt-3">Submit</button>
           </form>
         </div>
 
         <h3 className="text-center mt-5 mb-4">Frequently Asked Questions</h3>
         <div id="faqAccordion">
           {faqs.map((faq, index) => (
-            <div className="card mb-3" key={index}>
-              <div className="card-header" id={`heading${index}`}>
+            <div className="userQueryCard mb-3" key={index}>
+              <div className="userQueryCard-header" id={`heading${index}`}>
                 <h5 className="mb-0">
                   <button
-                    className="btn btn-link"
+                    className="userQueryBtn btn-link"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target={`#collapse${index}`}
@@ -115,7 +115,7 @@ const UserQuery = () => {
                 aria-labelledby={`heading${index}`}
                 data-parent="#faqAccordion"
               >
-                <div className="card-body">
+                <div className="userQueryCard-body">
                   {faq.answer}
                 </div>
               </div>
@@ -124,7 +124,7 @@ const UserQuery = () => {
         </div>
       </div>
 
-      <footer className="app-footer">
+      <footer className="userQuery-footer">
         <p>&copy; 2024 Flight Booking Support</p>
       </footer>
     </div>
