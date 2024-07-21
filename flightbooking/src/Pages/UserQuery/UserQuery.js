@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './UserQuery.css';
 import CustomNavbar from '../../components/Navbar';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 const faqs = [
@@ -22,6 +24,7 @@ const UserQuery = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [userId, setUserId] = useState('');
+  const navigate = useNavigate();
 
 
   const handleQueryChange = (e) => {
@@ -45,7 +48,9 @@ const UserQuery = () => {
     }
   }, [success]);
 
-
+  const handleNavigate =() => {
+    navigate('/user/userbooking');
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -70,7 +75,7 @@ const UserQuery = () => {
       
         <h1 className="userQuery-header">Flight Booking Support</h1>
 
-      <div className="container mt-5">
+      <div className="userQueryContainer mt-5">
         <div className="card p-4 shadow-sm mb-5">
           <h2 className="text-center mb-1">Ask a Question?</h2>
           {success && <div className="alert alert-success">Query submitted successfully!</div>}
@@ -122,6 +127,9 @@ const UserQuery = () => {
             </div>
           ))}
         </div>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      <Button variant="primary" onClick={handleNavigate}>Go to Flights Booking Page</Button>
+    </div>
       </div>
 
       <footer className="userQuery-footer">

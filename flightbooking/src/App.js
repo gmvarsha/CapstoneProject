@@ -26,9 +26,9 @@ function App() {
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
-          <Route path="/user/help" element={<UserQuery/>}/>
-          <Route path="/admin/queries" element={<AdminReply/>}/>
-          <Route path="/user/myQueries" element={<MyQuery/>}/>
+          <Route path="/user/help" element={<ProtectedRoute element={<UserQuery />}  requiredRole="User" />} />
+          <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
+          <Route path="/user/myQueries" element={<ProtectedRoute element={<MyQuery />}  requiredRole="User" />}/>
 
 
 

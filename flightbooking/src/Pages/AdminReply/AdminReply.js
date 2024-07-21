@@ -3,6 +3,7 @@ import { Table, Button, Collapse, Form,Toast, ToastContainer } from 'react-boots
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import CustomNavbar from '../../components/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 
 const AdminReply = () => {
@@ -12,6 +13,7 @@ const AdminReply = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState(''); // 'success' or 'error'
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -33,7 +35,9 @@ const AdminReply = () => {
       [userQueryId]: event.target.value
     });
   };
-
+const handleNavigate =() => {
+  navigate('/admin/adminhome');
+};
   const handleReplySubmit = (userId, userQueryId) => {
     const replyText = responses[userQueryId];
 
@@ -157,6 +161,9 @@ const AdminReply = () => {
           <Toast.Body>{toastMessage}</Toast.Body>
         </Toast>
       </ToastContainer>
+    </div>
+    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      <Button variant="primary" onClick={handleNavigate}>Go to Available Flights Page</Button>
     </div>
     </div>
   );
