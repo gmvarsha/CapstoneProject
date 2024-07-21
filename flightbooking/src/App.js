@@ -9,6 +9,8 @@ import UserSignUp from './Pages/SignUp/UserSignUp';
 // import UserBooking from './Pages/UserBooking/UserBookingex';
 import UserBooking from './Pages/UserBooking/User';
 import ProtectedRoute from './Pages/Login/ProtectedRoute';
+import UserQuery from './Pages/UserQuery/UserQuery';
+
 
 
 function App() {
@@ -22,6 +24,9 @@ function App() {
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
+          <Route path="/user/help" element={<UserQuery/>}/>
+
+
          {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
          {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
          {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}

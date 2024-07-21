@@ -19,7 +19,9 @@ const CustomNavbar = ({ role }) => {
       };
     
       const handleHelp = () => {
+        if(role=='User'){
         navigate('/user/help');
+        }
       };
     
       const handleMyBookings = () => {
@@ -56,7 +58,7 @@ const CustomNavbar = ({ role }) => {
         }}>
           <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
             {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyBookings}>My Bookings</li>}
-            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>
+            {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>}
             <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
           </ul>
         </div>
