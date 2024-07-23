@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './UserQuery.css';
 import CustomNavbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'bootstrap/dist/js/bootstrap.bundle.min';
+import { Button } from 'react-bootstrap';
 
 
 const faqs = [
@@ -65,6 +65,14 @@ const UserQuery = () => {
     }
   };
 
+  const containerStyle = {
+    maxWidth: '900px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '8px'
+};
+
   return (
     <div style={{
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
@@ -75,7 +83,7 @@ const UserQuery = () => {
       
         <h1 className="userQuery-header">Flight Booking Support</h1>
 
-      <div className="userQueryContainer mt-5">
+      <div style={containerStyle}>
         <div className="card p-4 shadow-sm mb-5">
           <h2 className="text-center mb-1">Ask a Question?</h2>
           {success && <div className="alert alert-success">Query submitted successfully!</div>}

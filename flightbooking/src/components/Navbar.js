@@ -34,6 +34,9 @@ const CustomNavbar = ({ role }) => {
       const handleMyQueries = () => {
         navigate('/user/myQueries');
       };
+      const handleUserWebCheckin = () => {
+        navigate('/user/userCheckin');
+      };
   return (
     <div>
     <Navbar bg="dark" variant="dark">
@@ -68,6 +71,7 @@ const CustomNavbar = ({ role }) => {
             {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>}
             {role=='Admin' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleUserQueries}>Queries</li>}
             {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyQueries}>My Queries</li>}
+            {role=='User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleUserWebCheckin}>Web-Checkin</li>}
 
             <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
           </ul>

@@ -65,6 +65,13 @@ const MyQuery = () => {
     );
   }
 
+  const containerStyle = {
+    maxWidth: '900px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '8px'
+};
   const renderTableRows = () => {
     if (queries.length === 0) {
       return (
@@ -101,6 +108,7 @@ const MyQuery = () => {
   }
 
   return (
+    <div>
     <div style={{
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
       minHeight: '100vh',
@@ -110,7 +118,7 @@ const MyQuery = () => {
       
         <h1 className="userQuery-header">User Queries</h1>
 
-    <Container className="mt-4">
+    <Container style={containerStyle}>
       <Card>
         <Card.Body>
           <Table striped bordered hover responsive className="table-sm">
@@ -132,5 +140,10 @@ const MyQuery = () => {
       </Card>
     </Container>
     </div>
+    
+    <footer className="userQuery-footer">
+    <p>&copy; 2024 Flight Web-CheckIn</p>
+  </footer>
+  </div>
   );
 };export default MyQuery;

@@ -12,6 +12,7 @@ import ProtectedRoute from './Pages/Login/ProtectedRoute';
 import UserQuery from './Pages/UserQuery/UserQuery';
 import AdminReply from './Pages/AdminReply/AdminReply';
 import MyQuery from './Pages/MyQuery/MyQuery';
+import UserCheckIn from './Pages/UserCheckIn/UserCheckIn.js';
 
 
 
@@ -29,7 +30,7 @@ function App() {
           <Route path="/user/help" element={<ProtectedRoute element={<UserQuery />}  requiredRole="User" />} />
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
           <Route path="/user/myQueries" element={<ProtectedRoute element={<MyQuery />}  requiredRole="User" />}/>
-
+          <Route path="/user/userCheckin" element={<ProtectedRoute element={<UserCheckIn />}  requiredRole="User" />} />
 
 
          {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
