@@ -9,6 +9,7 @@ import UserSignUp from './Pages/SignUp/UserSignUp';
 // import UserBooking from './Pages/UserBooking/UserBookingex';
 import UserBooking from './Pages/UserBooking/User';
 import ProtectedRoute from './Pages/Login/ProtectedRoute';
+import Booking from './Pages/UserBooking/BookTickets';
 
 
 function App() {
@@ -16,15 +17,15 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-        <Route path='/' element={<Login/>}/>
-          <Route exact path="/user/login" element={<Login/>} />
-          <Route path="/user/signup" element={<UserSignUp/>} />
-         {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
-         <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} />} />
+          <Route path='/' element={<Login />} />
+          <Route exact path="/user/login" element={<Login />} />
+          <Route path="/user/signup" element={<UserSignUp />} />
+          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
+          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} />} />
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />} />} />
-         {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
-         {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
-         {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}
+          <Route path="/user/bookFlight" element={<Booking/>}/>
+          {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
+          {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}
 
         </Routes>
 
