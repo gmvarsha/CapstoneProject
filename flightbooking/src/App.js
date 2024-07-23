@@ -20,30 +20,19 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path='/' element={<Login />} />
-          <Route exact path="/user/login" element={<Login />} />
-          <Route path="/user/signup" element={<UserSignUp />} />
-          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
-          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} />} />
-          <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />} />} />
-          <Route path="/user/bookFlight" element={<Booking/>}/>
-          {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
-          {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}
-        <Route path='/' element={<Login/>}/>
+          <Route path='/' element={<Login/>}/>
           <Route exact path="/user/login" element={<Login/>} />
           <Route path="/user/signup" element={<UserSignUp/>} />
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
+         <Route path="/user/bookFlight" element={<ProtectedRoute element={<Booking />} requiredRole="User" />}/>
+         
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
           <Route path="/user/help" element={<ProtectedRoute element={<UserQuery />}  requiredRole="User" />} />
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
           <Route path="/user/myQueries" element={<ProtectedRoute element={<MyQuery />}  requiredRole="User" />}/>
           <Route path="/user/userCheckin" element={<ProtectedRoute element={<UserCheckIn />}  requiredRole="User" />} />
 
-
-         {/* <Route path="/user/userbooking" element={<UserBooking/>}/> */}
-         {/* <Route path="/admin/adminlogin" element={<AdminLogin/>}/> */}
-         {/* <Route path="/admin/adminhome" element={<AdminHome />}/>  */}
 
         </Routes>
 
