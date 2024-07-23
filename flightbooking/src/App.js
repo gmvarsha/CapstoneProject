@@ -14,6 +14,7 @@ import UserQuery from './Pages/UserQuery/UserQuery';
 import AdminReply from './Pages/AdminReply/AdminReply';
 import MyQuery from './Pages/MyQuery/MyQuery';
 import UserCheckIn from './Pages/UserCheckIn/UserCheckIn.js';
+import AdminCheckIn from './Pages/AdminCheckIn/AdminCheckIn.js';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
           <Route path="/user/myQueries" element={<ProtectedRoute element={<MyQuery />}  requiredRole="User" />}/>
           <Route path="/user/userCheckin" element={<ProtectedRoute element={<UserCheckIn />}  requiredRole="User" />} />
+          <Route path="/admin/adminCheckin" element={<ProtectedRoute element={<AdminCheckIn />}  requiredRole="Admin" />} />
 
 
         </Routes>
