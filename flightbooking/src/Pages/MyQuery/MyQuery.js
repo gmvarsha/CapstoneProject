@@ -142,7 +142,7 @@ const MyQuery = () => {
     </div>
     
     <footer className="userQuery-footer">
-    <p>&copy; 2024 Flight Web-CheckIn</p>
+    <p>&copy; 2024 Flight User Queries</p>
   </footer>
   </div>
   );
