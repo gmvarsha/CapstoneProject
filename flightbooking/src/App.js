@@ -14,9 +14,12 @@ import UserQuery from './Pages/UserQuery/UserQuery';
 import AdminReply from './Pages/AdminReply/AdminReply';
 import MyQuery from './Pages/MyQuery/MyQuery';
 import UserCheckIn from './Pages/UserCheckIn/UserCheckIn.js';
+import MyBookings from './Pages/UserBooking/MyBookings.js';
+
 
 function App() {
   return (
+
     <Router>
       <div className="App">
         <Routes>
@@ -26,7 +29,8 @@ function App() {
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
          <Route path="/user/bookFlight" element={<ProtectedRoute element={<Booking />} requiredRole="User" />}/>
-         
+         <Route path="/user/myBookings" element={<ProtectedRoute element={<MyBookings />} requiredRole="User" />}/>
+
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
           <Route path="/user/help" element={<ProtectedRoute element={<UserQuery />}  requiredRole="User" />} />
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
@@ -38,6 +42,7 @@ function App() {
 
       </div>
     </Router>
+   
   );
 }
 

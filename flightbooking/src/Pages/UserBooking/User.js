@@ -3,7 +3,7 @@ import { Container, Table, Button, Navbar, Nav, Modal, Form } from 'react-bootst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Loading from '../../components/Loading/Loading';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import CustomNavbar from '../../components/Navbar';
@@ -25,6 +25,8 @@ const UserBooking = () => {
   const [from, setFrom] = useState(null);
   const [stop, setStop] = useState('');
   const [type, setType] = useState('');
+  const [isFlightsAvailable, setIsFlightAvailable] = useState(false);
+  const navigate = useNavigate();
 
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'];
   const stops = ['Non-stop', 'Single stop', 'Two stops']
@@ -79,17 +81,21 @@ const UserBooking = () => {
 
     try {
       setLoading(true);
+      const response = await axios.get('http://localhost:5000/flights')
+      console.log(response)
+      // const response = await axios.get('http://localhost:8080/flights/getflights', {
+      //   params: {
+      //     source: sourceCity,
+      //     destination: destinationCity,
+      //     departureDate: travelDate
+      //   }
+      // });
+      if (response.data) {
+        setLoading(false);
+        setFlights(response.data);
+        setIsFlightAvailable(true)
+      }
 
-      const response = await axios.get('http://localhost:8080/flights/getflights', {
-        params: {
-          source: sourceCity,
-          destination: destinationCity,
-          departureDate: travelDate
-        }
-      });
-
-      setLoading(false);
-      setFlights(response.data);
     } catch (error) {
       setLoading(false);
       console.error('Error:', error);
@@ -100,6 +106,10 @@ const UserBooking = () => {
     // Reset filtered flights when flights change
     setFilteredFlights([]);
   }, [flights]);
+
+  const handleBookingTicket =(flight)=>{
+    navigate('/user/bookFlight',{state:{flight}})
+  }
   const today = new Date().toISOString().split('T')[0];
 
   return (
@@ -108,7 +118,6 @@ const UserBooking = () => {
       minHeight: '100vh',
       color: '#000',
     }}>
-
       <CustomNavbar role='User' />
 
       <Container className="py-4">
@@ -171,100 +180,106 @@ const UserBooking = () => {
 
         {loading && <Loading />}
 
-        <Container className="py-4">
-          <h2 className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Available Flights</h2>
-          <div style={{ maxHeight: "230px", overflowY: 'auto' }}>
-            <Table striped bordered hover >
-              <thead>
-                <tr>
-                  <th>Flight Number</th>
-                  <th>Source</th>
-                  <th>Destination</th>
-                  <th>Departure Date</th>
-                  <th>
-                    Departure Time
-                    {flights.length > 0 && <FontAwesomeIcon
-                      icon={faFilter}
-                      onClick={() => {
-                        setFilterType('departure');
-                        setShowFilterModal(true);
-                      }}
-                      style={{ cursor: 'pointer', marginLeft: '5px' }}
-                    />}
-                  </th>
-                  <th>Arrival Date</th>
-                  <th>
-                    Arrival Time
-                    {flights.length > 0 && <FontAwesomeIcon
-                      icon={faFilter}
-                      onClick={() => {
-                        setFilterType('arrival');
-                        setShowFilterModal(true);
-                      }}
-                      style={{ cursor: 'pointer', marginLeft: '5px' }}
-                    />}
-                  </th>
-                  <th>
-                    Seats Available
+        {
+          isFlightsAvailable && (
+            <Container className="py-4">
+              <h2 className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Available Flights</h2>
+              <div style={{ maxHeight: "230px", overflowY: 'auto' }}>
+                <Table striped bordered hover >
+                  <thead>
+                    <tr>
+                      <th>Flight Number</th>
+                      <th>Source</th>
+                      <th>Destination</th>
+                      <th>Departure Date</th>
+                      <th>
+                        Departure Time
+                        {flights.length > 0 && <FontAwesomeIcon
+                          icon={faFilter}
+                          onClick={() => {
+                            setFilterType('departure');
+                            setShowFilterModal(true);
+                          }}
+                          style={{ cursor: 'pointer', marginLeft: '5px' }}
+                        />}
+                      </th>
+                      <th>Arrival Date</th>
+                      <th>
+                        Arrival Time
+                        {flights.length > 0 && <FontAwesomeIcon
+                          icon={faFilter}
+                          onClick={() => {
+                            setFilterType('arrival');
+                            setShowFilterModal(true);
+                          }}
+                          style={{ cursor: 'pointer', marginLeft: '5px' }}
+                        />}
+                      </th>
+                      <th>
+                        Seats Available
 
-                  </th>
-                  <th>
-                    Stops
-                    {flights.length > 0 && <FontAwesomeIcon
-                      icon={faFilter}
-                      onClick={() => {
-                        setFilterType('stops');
-                        setShowFilterModal(true);
-                      }}
-                      style={{ cursor: 'pointer', marginLeft: '5px' }}
-                    />}
-                  </th>
-                  <th>
-                    Flight Type
-                    {flights.length > 0 && <FontAwesomeIcon
-                      icon={faFilter}
-                      onClick={() => {
-                        setFilterType('type');
-                        setShowFilterModal(true);
-                      }}
-                      style={{ cursor: 'pointer', marginLeft: '5px' }}
-                    />}
-                  </th>
-                  <th>Price  {flights.length > 0 && <FontAwesomeIcon
-                    icon={faFilter}
-                    onClick={() => {
-                      setFilterType('price');
-                      setShowFilterModal(true);
-                    }}
-                    style={{ cursor: 'pointer', marginLeft: '5px' }}
-                  />}</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(filteredFlights.length > 0 ? filteredFlights : flights).map((flight, index) => (
-                  <tr key={index}>
-                    <td>{flight.flightNumber}</td>
-                    <td>{flight.source}</td>
-                    <td>{flight.destination}</td>
-                    <td>{flight.departureDate}</td>
-                    <td>{flight.departureTime}</td>
-                    <td>{flight.arrivalDate}</td>
-                    <td>{flight.arrivalTime}</td>
-                    <td>{flight.seats}</td>
-                    <td>{flight.stops}</td>
-                    <td>{flight.flightType}</td>
-                    <td>{flight.price}</td>
-                    <td><Button variant="primary">Book</Button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-            {(filteredFlights.length === 0 && flights.length === 0) && (
-              <p className="text-center">No rows to show</p>
-            )}
-          </div>
-        </Container>
+                      </th>
+                      <th>
+                        Stops
+                        {flights.length > 0 && <FontAwesomeIcon
+                          icon={faFilter}
+                          onClick={() => {
+                            setFilterType('stops');
+                            setShowFilterModal(true);
+                          }}
+                          style={{ cursor: 'pointer', marginLeft: '5px' }}
+                        />}
+                      </th>
+                      <th>
+                        Flight Type
+                        {flights.length > 0 && <FontAwesomeIcon
+                          icon={faFilter}
+                          onClick={() => {
+                            setFilterType('type');
+                            setShowFilterModal(true);
+                          }}
+                          style={{ cursor: 'pointer', marginLeft: '5px' }}
+                        />}
+                      </th>
+                      <th>Price  {flights.length > 0 && <FontAwesomeIcon
+                        icon={faFilter}
+                        onClick={() => {
+                          setFilterType('price');
+                          setShowFilterModal(true);
+                        }}
+                        style={{ cursor: 'pointer', marginLeft: '5px' }}
+                      />}</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(filteredFlights.length > 0 ? filteredFlights : flights).map((flight, index) => (
+                      <tr key={index}>
+                        <td>{flight.flightNumber}</td>
+                        <td>{flight.source}</td>
+                        <td>{flight.destination}</td>
+                        <td>{flight.departureDate}</td>
+                        <td>{flight.departureTime}</td>
+                        <td>{flight.arrivalDate}</td>
+                        <td>{flight.arrivalTime}</td>
+                        <td>{flight.seats}</td>
+                        <td>{flight.stops}</td>
+                        <td>{flight.flightType}</td>
+                        <td>{flight.price}</td>
+                        <td><Button variant="primary" onClick={()=>{
+                          handleBookingTicket(flight)
+                        }}>Book</Button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                {(filteredFlights.length === 0 && flights.length === 0) && (
+                  <p className="text-center">No rows to show</p>
+                )}
+              </div>
+            </Container>
+          )
+        }
       </Container>
 
       <Modal show={showFilterModal} onHide={() => setShowFilterModal(false)}>

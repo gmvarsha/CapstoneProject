@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import { Container, Table, Button, Navbar, Nav, Alert, Modal, Form, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import axios from "axios";
+import CustomNavbar from "../../components/Navbar";
 
 
 const BookTickets = () => {
@@ -15,16 +17,22 @@ const BookTickets = () => {
     const [isNewPassenger, setIsNewPassenger] = useState(false);
     const [isPassengerAvailable, setIsPassengerAvailable] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [flightDetails, setFlightDetails] = useState(true);
+    const today = new Date().toISOString().split('T')[0];
+    const [assignedSeats, setAssignedSeats] = useState([]);
+
+
+
     const navigate = useNavigate();
     const location = useLocation();
 
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        passportNumber: '',
-        dob: '',
-        seatNumber: '',
-        flight_id: ''
+        first_name: '',
+        last_name: '',
+        passport_number: '',
+        date_of_birth: '',
+        seat_number: '',
+        flightId: ''
     });
 
 
@@ -33,7 +41,8 @@ const BookTickets = () => {
 
     const { flight } = location.state || {
         flight: {
-            id: '', flightNumber: '',
+            id: '',
+            flightNumber: '',
             source: '',
             destination: '',
             departureDate: '',
@@ -64,21 +73,30 @@ const BookTickets = () => {
 
     const handleAddPassenger = (e) => {
         e.preventDefault()
-        setIsNewPassenger(true)
-        if (formData.firstName)
-            setPassengers((prevData) => {
-                formData.flight_id = flight.id
-                const updatedPassengers = [...prevData, formData]
-                console.log(updatedPassengers)
-                return updatedPassengers;
-            })
+        if (validateForm(e)) {
+            setAssignedSeats([...assignedSeats, formData.seat_number]);
+            // Add passenger logic here
+            setIsNewPassenger(true)
+            console.log(formData)
+            if (formData.first_name)
+                setPassengers((prevData) => {
+                    formData.flightId = flight.id
+                    formData.checked_in = 0
+                    const updatedPassengers = [...prevData, formData]
+                    console.log(updatedPassengers)
+                    return updatedPassengers;
+                })
+    
+          }
+       
+        
 
         setFormData({
-            firstName: '',
-            lastName: '',
-            passportNumber: '',
-            dob: '',
-            seatNumber: '',
+            first_name: '',
+            last_name: '',
+            passport_number: '',
+            date_of_birth: '',
+            seat_number: '',
 
         })
         setIsPassengerModalOpen(false)
@@ -98,6 +116,8 @@ const BookTickets = () => {
     }
 
     const handleModalOpen = (e) => {
+        if (passengers)
+            setFlightDetails(false)
         setIsPassengerModalOpen(true)
     }
     const handleModalClose = () => {
@@ -105,13 +125,91 @@ const BookTickets = () => {
     }
 
 
-    const handlePassengerSubmit = () => {
-        console.log('submitting')
+    const handlePassengerSubmit = async () => {
+
+        console.log(passengers)
+        const pass = passengers
+        let finalJson = {
+            user: {
+                userId: localStorage.getItem('userId')
+            },
+            flight: {
+                flightId: flight.id
+            },
+            passengerDetails: pass,
+            // booking_date:flight.
+            bookingDate: today,
+            status: "pending"
+        }
+
+        console.log(finalJson)
+
+
+        try {
+
+            const response = await axios.post('http://localhost:8080/api/user/booking', JSON.stringify(finalJson), {
+
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            },
+            )
+            if (response.status == 201) {
+                setSuccessMessage(response.data)
+                setInterval(() => {
+                    navigate('/user/myBookings')
+                }, 2000)
+
+            } else {
+                setErrorMessage(response.data)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleRemovePassenger = (index) => {
+        setSuccessMessage('');
+        setErrorMessage('');
+
         setPassengers(passengers.filter((passenger, i) => i !== index));
     };
+
+    const handleFlightDetails = () => {
+        if (flightDetails)
+            setFlightDetails(false)
+        else
+            setFlightDetails(true)
+    }
+
+    const validateForm = (e) => {
+        const { passport_number, seat_number, date_of_birth } = formData;
+        let isValid = true;
+
+        if (passport_number && passport_number.toString().length > 5) {
+            isValid = false;
+        }
+
+        if (seat_number && (seat_number <= 0 || seat_number >= 25 || assignedSeats.includes(seat_number))) {
+            isValid = false;
+        }
+
+
+        if (date_of_birth && isDateInvalid(date_of_birth)) {
+            isValid = false;
+        }
+
+        return isValid;
+    };
+
+    const isDateInvalid = (date) => {
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        return new Date(date) > sixMonthsAgo;
+    };
+
 
 
     return (
@@ -122,24 +220,7 @@ const BookTickets = () => {
             color: '#000',
         }}>
 
-            <Navbar bg="dark" variant="dark">
-                <Container fluid>
-                    <Navbar.Brand href="#home" className="ms-0 me-auto">Flight Booking App</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ms-auto">
-                            {/* <Nav.Link style={{color:"white"}}>My Bookings</Nav.Link> */}
-                            <Nav.Link style={{ color: "white" }} onClick={handleMenuToggle}>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                                    <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                                    <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                                </div>
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <CustomNavbar role='User' />
 
             {menuOpen && (
                 <div style={{
@@ -161,22 +242,23 @@ const BookTickets = () => {
 
 
 
-           <h3 className="text-left mb-4" style={{ fontSize:'25px' }}>Flight Details</h3>
-            <div className="text-center mb-1">
-                <Table striped bordered hover size="sm" className="table-left small-padding" >
+            <h3 className="text-center mb-4 ml-0 container-md" style={{ fontSize: '25px' }}>
+                Flight Details  <Button variant="secondary" style={{ fontSize: '1rem' }} size="sm" onClick={handleFlightDetails}>{flightDetails ? 'Hide flightDetails' : 'View flightDetails'}</Button>
+            </h3>
+            {flightDetails && (<div className="container-sm">
+                <Table striped bordered hover size="sm" className="table-left small-padding" style={{ padding: '0px' }} >
                     <tbody>
                         {Object.entries(flight).slice(1).map(([key, value], index) => (
                             <tr key={index}>
-                                <td><b>{key}</b></td>
+                                <td style={{ padding: '10px', align: 'left' }} ><b>{key}</b></td>
                                 <td>{value}</td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
 
-                <Button variant="primary" type="button" onClick={(e) => handleModalOpen(e)}  >Procced Booking</Button>
-            </div>
 
+            </div>)}
             <Container>
                 <Modal show={isPassengerModalOpen} onHide={handleModalClose} dialogClassName="modal-90w">
                     <Modal.Header closeButton>
@@ -187,23 +269,40 @@ const BookTickets = () => {
                         <Form onSubmit={(e) => { handleAddPassenger(e) }}>
                             <Form.Group controlId="formPassengerFirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control type="text" name="firstName" value={formData.firstName} onChange={handleFormChange} required />
+                                <Form.Control type="text" name="first_name" value={formData.first_name} onChange={handleFormChange} required />
                             </Form.Group>
                             <Form.Group controlId="formLastName">
                                 <Form.Label>Last Name</Form.Label>
-                                <Form.Control type="text" name="lastName" value={formData.lastName} onChange={handleFormChange} required />
+                                <Form.Control type="text" name="last_name" value={formData.last_name} onChange={handleFormChange} required />
                             </Form.Group>
                             <Form.Group controlId="formPassport">
                                 <Form.Label>passport number</Form.Label>
-                                <Form.Control type="text" name="passportNumber" value={formData.passportNumber} onChange={handleFormChange} required />
+                                <Form.Control type="number" name="passport_number" value={formData.passport_number} onChange={handleFormChange} required />
+                                {formData.passport_number && formData.passport_number.toString().length > 5 && (
+                                    <Form.Text className="text-danger">
+                                        Passport number should not exceed 5 digits
+                                    </Form.Text>
+                                )}
                             </Form.Group>
                             <Form.Group controlId="formSeats">
                                 <Form.Label>Seat Number</Form.Label>
-                                <Form.Control type="number" name="seatNumber" value={formData.seatNumber} onChange={handleFormChange} required />
+                                <Form.Control type="number" name="seat_number" value={formData.seat_number} onChange={handleFormChange} required />
+                                {formData.seat_number && (formData.seat_number <= 0 || formData.seat_number >= 25) && (
+                                    <Form.Text className="text-danger">
+                                        Seat number should be greater than 0 and less than 25
+                                    </Form.Text>
+                                )}
+
                             </Form.Group>
                             <Form.Group controlId="formDob">
                                 <Form.Label>Date of Birth</Form.Label>
-                                <Form.Control type="date" name="dob" value={formData.dob} onChange={handleFormChange} required />
+                                <Form.Control type="date" name="date_of_birth" value={formData.date_of_birth} onChange={handleFormChange} required />
+                                {formData.date_of_birth && isDateInvalid(formData.date_of_birth) && (
+                                    <Form.Text className="text-danger">
+                                        passenger has to be atleat 6 months old from current date
+                                    </Form.Text>
+                                )}
+
                             </Form.Group>
                             <Button variant="primary" type="submit" >{isNewPassenger ? 'AddNewPassenger' : 'AddPassenger'}</Button>
                         </Form>
@@ -215,7 +314,7 @@ const BookTickets = () => {
 
             {isPassengerAvailable && (
                 <div className="text-center mt-4" >
-                    <h2  >Booked Passenger Details</h2>
+                    <h2>Passenger Details</h2>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -224,16 +323,17 @@ const BookTickets = () => {
                                 <th>Passport Number</th>
                                 <th>Seat Number</th>
                                 <th>flight Number</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {passengers.map((passenger, index) => (
                                 <tr key={index}>
-                                    <td>{passenger.firstName}</td>
-                                    <td>{passenger.lastName}</td>
-                                    <td>{passenger.passportNumber}</td>
-                                    <td>{passenger.seatNumber}</td>
-                                    <td>{passenger.flight_id}</td>
+                                    <td>{passenger.first_name}</td>
+                                    <td>{passenger.last_name}</td>
+                                    <td>{passenger.passport_number}</td>
+                                    <td>{passenger.seat_number}</td>
+                                    <td>{passenger.flightId}</td>
                                     <td>
                                         <Button variant="secondary" onClick={() => handleRemovePassenger(index)}>
                                             Remove
@@ -244,13 +344,21 @@ const BookTickets = () => {
                             ))}
                         </tbody>
                     </Table>
-                    <Button variant="primary" onClick={() => {
-                        handlePassengerSubmit()
-                    }}>Confirm Booking</Button>
-                    {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+
                 </div>
             )}
+            <div className="text-center mt-4 container-md" >
+                <Button variant="primary" type="button" onClick={(e) => handleModalOpen(e)} >
+                    {isNewPassenger ? 'Add Next Passenger' : 'Add  Passenger'}</Button>
+                &nbsp;&nbsp;
+                {isPassengerAvailable && <Button variant="success" onClick={() => { handlePassengerSubmit() }}>
+                    Confirm Booking</Button>}
 
+            </div>
+
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
 
         </div>
 

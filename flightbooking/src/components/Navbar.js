@@ -24,7 +24,10 @@ const CustomNavbar = ({ role }) => {
         navigate('/user/help');
         }
       };
-    
+       
+      const handleHomeIcon=()=>{
+         navigate('/user/userbooking')
+      }
       const handleMyBookings = () => {
         navigate('/user/mybookings');
       };
@@ -41,7 +44,9 @@ const CustomNavbar = ({ role }) => {
     <div>
     <Navbar bg="dark" variant="dark">
       <Container fluid>
-        <Navbar.Brand href="#home" className="ms-0 me-auto">SwayAirApp</Navbar.Brand>
+        <Navbar.Brand href="#home" className="ms-0 me-auto" onClick={()=>{
+         return  handleHomeIcon()
+        }}>SwayAirApp</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
