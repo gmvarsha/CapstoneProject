@@ -15,11 +15,13 @@ import AdminReply from './Pages/AdminReply/AdminReply';
 import MyQuery from './Pages/MyQuery/MyQuery';
 import UserCheckIn from './Pages/UserCheckIn/UserCheckIn.js';
 import AdminCheckIn from './Pages/AdminCheckIn/AdminCheckIn.js';
+import Chatbot from './components/Chatbot.js';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <Chatbot></Chatbot>
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route exact path="/user/login" element={<Login/>} />
