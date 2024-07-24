@@ -76,6 +76,13 @@ const handleNavigate =() => {
       });
   };
 
+  const containerStyle = {
+    maxWidth: '900px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '8px'
+};
   return (
     <div style={{
         background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
@@ -86,7 +93,7 @@ const handleNavigate =() => {
         
           <h1 className="userQuery-header">User Queries</h1>
   
-    <div className="container mt-4">
+    <div style={containerStyle}>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -165,6 +172,10 @@ const handleNavigate =() => {
     <div style={{ textAlign: 'center', marginTop: '20px' }}>
       <Button variant="primary" onClick={handleNavigate}>Go to Available Flights Page</Button>
     </div>
+    
+    <footer className="userQuery-footer">
+    <p>&copy; 2024 Flight User Queries</p>
+  </footer>
     </div>
   );
 };

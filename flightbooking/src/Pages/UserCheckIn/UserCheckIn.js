@@ -47,7 +47,7 @@ const UserCheckIn = () => {
         const booking = bookings.find(b => b.bookingId === bookingId);
         if (booking) {
             const allPassengerIds = booking.passengers
-                .filter(p => !p.checked_in)
+                .filter(p => !p.checkedInFlag)
                 .map(p => p.passenger_id);
 
             const newSelectedPassengers = selectedPassengers.filter(id => !allPassengerIds.includes(id));
@@ -68,7 +68,7 @@ const UserCheckIn = () => {
         const booking = bookings.find(b => b.bookingId === bookingId);
         if (booking) {
             const allPassengerIds = booking.passengers
-                .filter(p => !p.checked_in)
+                .filter(p => !p.checkedInFlag)
                 .map(p => p.passenger_id);
             
             const newSelectedPassengers = selectedPassengers.includes(bookingId)
@@ -83,7 +83,7 @@ const UserCheckIn = () => {
         const booking = bookings.find(b => b.bookingId === bookingId);
         if (booking) {
             const allPassengerIds = booking.passengers
-                .filter(p => !p.checked_in)
+                .filter(p => !p.checkedInFlag)
                 .map(p => p.passenger_id);
 
             return allPassengerIds.every(id => selectedPassengers.includes(id));
@@ -201,14 +201,14 @@ const UserCheckIn = () => {
                                             <li key={passenger.passenger_id} className="list-group-item d-flex justify-content-between align-items-center">
                                                 <div>
                                                     <strong>{passenger.first_name} {passenger.last_name}</strong><br/>
-                                                    Seat: {passenger.seat_number} - Checked In: {passenger.checked_in ? 'Yes' : 'No'}
+                                                    Seat: {passenger.seat_number} - Checked In: {passenger.checkedInFlag ? 'Yes' : 'No'}
                                                 </div>
                                                 <input
                                                     type="checkbox"
                                                     className="form-check-input ml-2"
                                                     checked={selectedPassengers.includes(passenger.passenger_id)}
                                                     onChange={() => handleSelectPassenger(passenger.passenger_id)}
-                                                    disabled={passenger.checked_in}
+                                                    disabled={passenger.checkedInFlag}
                                                 />
                                             </li>
                                         ))}

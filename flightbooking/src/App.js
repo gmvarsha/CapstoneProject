@@ -16,12 +16,15 @@ import MyQuery from './Pages/MyQuery/MyQuery';
 import UserCheckIn from './Pages/UserCheckIn/UserCheckIn.js';
 import MyBookings from './Pages/UserBooking/MyBookings.js';
 
+import AdminCheckIn from './Pages/AdminCheckIn/AdminCheckIn.js';
+import Chatbot from './components/Chatbot.js';
 
 function App() {
   return (
 
     <Router>
       <div className="App">
+        <Chatbot></Chatbot>
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route exact path="/user/login" element={<Login/>} />
@@ -36,6 +39,7 @@ function App() {
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
           <Route path="/user/myQueries" element={<ProtectedRoute element={<MyQuery />}  requiredRole="User" />}/>
           <Route path="/user/userCheckin" element={<ProtectedRoute element={<UserCheckIn />}  requiredRole="User" />} />
+          <Route path="/admin/adminCheckin" element={<ProtectedRoute element={<AdminCheckIn />}  requiredRole="Admin" />} />
 
 
         </Routes>
