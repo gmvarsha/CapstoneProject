@@ -172,6 +172,10 @@ const handleNavigate =() => {
     <div style={{ textAlign: 'center', marginTop: '20px' }}>
       <Button variant="primary" onClick={handleNavigate}>Go to Available Flights Page</Button>
     </div>
+    
+    <footer className="userQuery-footer">
+    <p>&copy; 2024 Flight User Queries</p>
+  </footer>
     </div>
   );
 };
