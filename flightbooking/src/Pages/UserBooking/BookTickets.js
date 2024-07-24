@@ -20,6 +20,10 @@ const BookTickets = () => {
     const [flightDetails, setFlightDetails] = useState(true);
     const today = new Date().toISOString().split('T')[0];
     const [assignedSeats, setAssignedSeats] = useState([]);
+    const [isValid, setIsValid] = useState(true);
+    const [errorMessageAvailable, setErrorMessageAvailable] = useState(false);
+    const [duplicatePassports, setDuplicatePassports] = useState([])
+
 
 
 
@@ -73,8 +77,10 @@ const BookTickets = () => {
 
     const handleAddPassenger = (e) => {
         e.preventDefault()
+        console.log(assignedSeats)
         if (validateForm(e)) {
-            setAssignedSeats([...assignedSeats, formData.seat_number]);
+            setAssignedSeats(() => [...assignedSeats, formData.seat_number]);
+            setDuplicatePassports(() => [...duplicatePassports, formData.passport_number])
             // Add passenger logic here
             setIsNewPassenger(true)
             console.log(formData)
@@ -86,10 +92,8 @@ const BookTickets = () => {
                     console.log(updatedPassengers)
                     return updatedPassengers;
                 })
-    
-          }
-       
-        
+
+        }
 
         setFormData({
             first_name: '',
@@ -143,16 +147,11 @@ const BookTickets = () => {
         }
 
         console.log(finalJson)
-
-
         try {
-
             const response = await axios.post('http://localhost:8080/api/user/booking', JSON.stringify(finalJson), {
-
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
             },
             )
             if (response.status == 201) {
@@ -186,29 +185,49 @@ const BookTickets = () => {
 
     const validateForm = (e) => {
         const { passport_number, seat_number, date_of_birth } = formData;
-        let isValid = true;
+        let isValidCase = true;
+
 
         if (passport_number && passport_number.toString().length > 5) {
-            isValid = false;
+            isValidCase = false;
         }
-
+        console.log(assignedSeats.includes(seat_number))
         if (seat_number && (seat_number <= 0 || seat_number >= 25 || assignedSeats.includes(seat_number))) {
-            isValid = false;
+            isValidCase = false;
         }
 
 
         if (date_of_birth && isDateInvalid(date_of_birth)) {
-            isValid = false;
+            isValidCase = false;
         }
 
-        return isValid;
+        return isValidCase;
     };
 
     const isDateInvalid = (date) => {
         const sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
         return new Date(date) > sixMonthsAgo;
     };
+
+    const checkSeat = () => {
+        const { seat_number } = formData;
+
+        if (assignedSeats.includes(seat_number))
+            return true
+        return false
+    }
+
+    const checkPassport = () => {
+        const { passport_number } = formData;
+
+        if (duplicatePassports.includes(passport_number))
+            return true
+        return false
+    }
+
+
 
 
 
@@ -283,6 +302,10 @@ const BookTickets = () => {
                                         Passport number should not exceed 5 digits
                                     </Form.Text>
                                 )}
+                                {checkPassport() && (<Form.Text className="text-danger">
+                                    Passport number should not be same for any passenger
+                                </Form.Text>)}
+
                             </Form.Group>
                             <Form.Group controlId="formSeats">
                                 <Form.Label>Seat Number</Form.Label>
@@ -291,7 +314,11 @@ const BookTickets = () => {
                                     <Form.Text className="text-danger">
                                         Seat number should be greater than 0 and less than 25
                                     </Form.Text>
+
                                 )}
+                                {checkSeat() && (<Form.Text className="text-danger">
+                                    Seat number is Occupied
+                                </Form.Text>)}
 
                             </Form.Group>
                             <Form.Group controlId="formDob">

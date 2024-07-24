@@ -3,7 +3,7 @@ import { Container, Table, Button, Navbar, Nav, Modal, Form } from 'react-bootst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Loading from '../../components/Loading/Loading';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import CustomNavbar from '../../components/Navbar';
@@ -81,15 +81,14 @@ const UserBooking = () => {
 
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/flights')
-      console.log(response)
-      // const response = await axios.get('http://localhost:8080/flights/getflights', {
-      //   params: {
-      //     source: sourceCity,
-      //     destination: destinationCity,
-      //     departureDate: travelDate
-      //   }
-      // });
+
+      const response = await axios.get('http://localhost:8080/flights/getflights', {
+        params: {
+          source: sourceCity,
+          destination: destinationCity,
+          departureDate: travelDate
+        }
+      });
       if (response.data) {
         setLoading(false);
         setFlights(response.data);
@@ -107,8 +106,8 @@ const UserBooking = () => {
     setFilteredFlights([]);
   }, [flights]);
 
-  const handleBookingTicket =(flight)=>{
-    navigate('/user/bookFlight',{state:{flight}})
+  const handleBookingTicket = (flight) => {
+    navigate('/user/bookFlight', { state: { flight } })
   }
   const today = new Date().toISOString().split('T')[0];
 
@@ -266,7 +265,7 @@ const UserBooking = () => {
                         <td>{flight.stops}</td>
                         <td>{flight.flightType}</td>
                         <td>{flight.price}</td>
-                        <td><Button variant="primary" onClick={()=>{
+                        <td><Button variant="primary" onClick={() => {
                           handleBookingTicket(flight)
                         }}>Book</Button></td>
                       </tr>

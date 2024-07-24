@@ -14,16 +14,11 @@ const MyBookings = () => {
 
     const navigate = useNavigate();
 
-
-
-
     useEffect(() => {
         let userId = localStorage.getItem('userId')
         console.log(parseInt(userId))
         axios.get('http://localhost:8080/api/user/getBookingDetails/' + userId) // Replace with your API endpoint
             .then(response => {
-
-
                 setFlightData(
                     response.data
                 )
@@ -203,111 +198,3 @@ const MyBookings = () => {
 }
 
 export default MyBookings;
-
-/*
-<div>
-      {bookings.map((booking) => (
-        <Card key={booking.bookingId} className="mb-3">
-          <Card.Header>Booking {booking.bookingId}</Card.Header>
-          <Card.Body>
-            <Table striped bordered hover>
-              <tbody>
-                <tr>
-                  <td>Booking Date</td>
-                  <td>{booking.booking_date}</td>
-                </tr>
-                <tr>
-                  <td>Status</td>
-                  <td>{booking.status}</td>
-                </tr>
-              </tbody>
-            </Table>
-            <Button
-              variant="primary"
-              onClick={() =>
-                setShowFlightDetails((prev) => ({
-                  ...prev,
-                  [booking.bookingId]: !prev[booking.bookingId],
-                }))
-              }
-            >
-              {showFlightDetails[booking.bookingId] ? 'Hide' : 'Show'} Flight Details
-            </Button>
-            {showFlightDetails[booking.bookingId] && (
-              <Table striped bordered hover>
-                <tbody>
-                  <tr>
-                    <td>Flight Number</td>
-                    <td>{booking.flight.flightNumber}</td>
-                  </tr>
-                  <tr>
-                    <td>Source</td>
-                    <td>{booking.flight.source}</td>
-                  </tr>
-                  <tr>
-                    <td>Destination</td>
-                    <td>{booking.flight.destination}</td>
-                  </tr>
-                  <tr>
-                    <td>Departure Date</td>
-                    <td>{booking.flight.departureDate}</td>
-                  </tr>
-                  <tr>
-                    <td>Departure Time</td>
-                    <td>{booking.flight.departureTime}</td>
-                  </tr>
-                  <tr>
-                    <td>Arrival Date</td>
-                    <td>{booking.flight.arrivalDate}</td>
-                  </tr>
-                  <tr>
-                    <td>Arrival Time</td>
-                    <td>{booking.flight.arrivalTime}</td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-            {booking.passengers && booking.passengers.length > 0 && (
-              <Button
-                variant="primary"
-                onClick={() =>
-                  setShowPassengerDetails((prev) => ({
-                    ...prev,
-                    [booking.bookingId]: !prev[booking.bookingId],
-                  }))
-                }
-              >
-                {showPassengerDetails[booking.bookingId] ? 'Hide' : 'Show'} Passenger Details
-              </Button>
-            )}
-            {showPassengerDetails[booking.bookingId] && (
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Passport Number</th>
-                    <th>Date of Birth</th>
-                    <th>Seat Number</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {booking.passengers.map((passenger) => (
-                    <tr key={passenger.passenger_id}>
-                      <td>{passenger.first_name}</td>
-                      <td>{passenger.last_name}</td>
-                      <td>{passenger.passport_number}</td>
-                      <td>{passenger.date_of_birth}</td>
-                      <td>{passenger.seat_number}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            )}
-          </Card.Body>
-        </Card>
-      ))}
-    </div>
-  );
-}
-*/
