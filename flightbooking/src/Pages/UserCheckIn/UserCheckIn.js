@@ -96,8 +96,8 @@ const UserCheckIn = () => {
       };
 
     const handleCheckIn = async () => {
-        const email = localStorage.getItem('email');
-        if (!email) {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
             toast.error("User not logged in.");
             return;
         }
