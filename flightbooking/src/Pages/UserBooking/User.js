@@ -76,6 +76,7 @@ const UserBooking = () => {
     setError('');
 
     if (sourceCity === destinationCity) {
+      setFlights([])
       setError('Source and destination cannot be the same.');
       setTimeout(() => setError(''), 3000)
 
