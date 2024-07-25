@@ -129,8 +129,9 @@ const UserBooking = () => {
       <CustomNavbar role='User' />
 
       <Container className="py-4">
-        <Card className="p-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Search for Flights</h2>
+        <Card className="p-4" style={{ maxWidth: '600px', margin: '0 auto',background:'linear-gradient(to bottom right, #f7c6c5, #fff)' }}>
+          <Card.Title><div className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Search for Flights</div></Card.Title>
+          <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Row>
@@ -179,6 +180,8 @@ const UserBooking = () => {
               <Button type="submit" variant="primary">Search Flights</Button>
             </div>
           </Form>
+          </Card.Body>
+          
 
         </Card>
 

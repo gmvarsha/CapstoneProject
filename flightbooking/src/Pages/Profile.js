@@ -36,8 +36,7 @@ import React from 'react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import { IoPerson } from 'react-icons/io5';
 import CustomNavbar from '../components/Navbar';
-import flight from '../../flight2.jpg'
-
+import flight from '../../src/flight2.jpg'
 
 const ProfilePage = () => {
 
@@ -51,15 +50,18 @@ const ProfilePage = () => {
     }
     return (
         <div style={{
+           
+            
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
+            minHeight: '100vh'
         }}>
             <CustomNavbar role={user.role} />
-            <Container >
+            <Container className='mb-2 py-4'>
                 <Row className="justify-content-center mt-5">
                     <Col md={6}>
-                        <Card>
+                        <Card style={{ color: '#000',}}>
                             <Card.Header>
                                 <IoPerson size={100}></IoPerson>
                                 <Card.Title>{user.firstName} {user.lastName}</Card.Title>
