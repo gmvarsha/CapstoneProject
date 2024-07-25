@@ -244,28 +244,10 @@ const BookTickets = () => {
 
             <CustomNavbar role='User' />
 
-            {menuOpen && (
-                <div style={{
-                    position: 'absolute',
-                    top: '50px',
-                    right: '10px',
-                    background: 'white',
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    zIndex: 1000
-                }}>
-                    <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
-                        <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyBookings}>My Bookings</li>
-                        <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>
-                        <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleLogout}>Logout</li>
-                    </ul>
-                </div>
-            )}
+          
 
-
-
-            <h3 className="text-center mb-4 ml-0 container-md" style={{ fontSize: '25px' }}>
-                Flight Details  <Button variant="secondary" style={{ fontSize: '1rem' }} size="sm" onClick={handleFlightDetails}>{flightDetails ? 'Hide flightDetails' : 'View flightDetails'}</Button>
+            <h3 className="text-center mb-100 container-sm" style={{ fontSize: '25px', color: '#fff' }}>
+                Flight Details  <Button variant="primary" style={{ fontSize: '1rem' }} size="sm" onClick={handleFlightDetails}>{flightDetails ? 'Hide flightDetails' : 'View flightDetails'}</Button>
             </h3>
             {flightDetails && (<div className="container-sm">
                 <Table striped bordered hover size="sm" className="table-left small-padding" style={{ padding: '0px' }} >
@@ -389,7 +371,17 @@ const BookTickets = () => {
 
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
             {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
-
+            <footer style={{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        textAlign: 'center',
+        padding: '10px 0',
+      }}>
+        <p style={{ margin: 0 ,'color': '#fff'}}>&copy; 2024 SwayAirApp. All rights reserved.</p>
+      </footer>
         </div>
 
 

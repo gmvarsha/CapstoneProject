@@ -19,8 +19,8 @@ const ProfilePage = () => {
     }
     return (
         <div style={{
-           
-            
+
+
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -31,7 +31,7 @@ const ProfilePage = () => {
             <Container className='mb-2 py-4'>
                 <Row className="justify-content-center mt-5">
                     <Col md={6}>
-                        <Card style={{ color: '#000',}}>
+                        <Card style={{ color: '#000', }}>
                             <Card.Header>
                                 <IoPerson size={100}></IoPerson>
                                 <Card.Title>{user.firstName} {user.lastName}</Card.Title>
@@ -51,6 +51,17 @@ const ProfilePage = () => {
                     </Col>
                 </Row>
             </Container>
+            <footer style={{
+                position: 'fixed',
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                textAlign: 'center',
+                padding: '10px 0',
+            }}>
+                <p style={{ margin: 0, 'color': '#fff' }}>&copy; 2024 SwayAirApp. All rights reserved.</p>
+            </footer>
         </div>
     );
 }
