@@ -1,42 +1,11 @@
-// import React from 'react';
-// import { IoPerson } from 'react-icons/io5';
 
-// function ProfilePage() {
-//     const user = {
-//         firstName:localStorage.getItem('firstName'),
-//         lastName: localStorage.getItem('lastName'),
-//         userId:localStorage.getItem('userId'),
-//         role:localStorage.getItem('userRole'),
-//         email:localStorage.getItem('userRole')
-
-
-//     }
-//   return (
-//     <div className="profile-page">
-//       <div className="profile-header">
-//       <IoPerson size={30} color="#FFFFFF" />
-//         <h1>{user.firstName} {user.lastName}</h1>
-//         <p>{user.email}</p>
-//         <p>{user.role}</p>
-//       </div>
-//       <div className="profile-info">
-//         <h2>About Me</h2>
-//         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-//       </div>
-//       <div className="profile-stats">
-//         <h2>Account Type</h2>
-//         <p>{user.role === 'admin' ? 'Administrator' : 'User'}</p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ProfilePage;
 import React from 'react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import { IoPerson } from 'react-icons/io5';
 import CustomNavbar from '../components/Navbar';
 import flight from '../../src/flight2.jpg'
+
+
 
 const ProfilePage = () => {
 
@@ -56,6 +25,7 @@ const ProfilePage = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             minHeight: '100vh'
+
         }}>
             <CustomNavbar role={user.role} />
             <Container className='mb-2 py-4'>
