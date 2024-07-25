@@ -6,7 +6,7 @@ import CustomNavbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import './UserQuery.css';
-
+import flight from '../../flight2.jpg'
 
 const faqs = [
   { question: 'How to book a flight?', answer: 'You can book a flight by searching for available flights, selecting your preferred flight, and following the booking instructions.' },
@@ -86,6 +86,9 @@ const UserQuery = () => {
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
       minHeight: '100vh',
       color: '#000',
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     }}>
       <CustomNavbar role='User' />
 

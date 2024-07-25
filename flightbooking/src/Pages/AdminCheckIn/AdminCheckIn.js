@@ -4,6 +4,7 @@ import { Button, Table, Container, Row, Col, Card, Alert, Spinner, Accordion } f
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomNavbar from '../../components/Navbar';
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Correct import
+import flight from '../../flight2.jpg'
 
 const AdminCheckIn = () => {
     const [checkedInPassengers, setCheckedInPassengers] = useState([]);
@@ -74,6 +75,9 @@ const AdminCheckIn = () => {
                 background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
                 minHeight: '100vh',
                 color: '#000',
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
             }}>    
                 <CustomNavbar role='Admin' />
                 
