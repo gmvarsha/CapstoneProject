@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { IoHome, IoPerson } from 'react-icons/io5';
 
 
@@ -45,6 +45,10 @@ const CustomNavbar = ({ role }) => {
   const handleAdminWebCheckin = () => {
     navigate('/admin/adminCheckin');
   };
+
+  const handleProfile = () =>{
+    return navigate('/user/profile')
+  }
   return (
     <div>
       <Navbar bg="dark" variant="dark">
@@ -58,7 +62,7 @@ const CustomNavbar = ({ role }) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <Nav.Link style={{ color: "white" }} onClick={handleMenuToggle}>
-                <div style={{ marginLeft: '15rem' }}> {/* move Profile icon to right */}
+                <div style={{ marginLeft: '15px' }}> {/* move Profile icon to right */}
                   <IoPerson size={30} color="#FFFFFF" />
                 </div>
               </Nav.Link>
@@ -77,6 +81,7 @@ const CustomNavbar = ({ role }) => {
           zIndex: 1000
         }}>
           <ul style={{ listStyle: 'none', padding: '10px', margin: 0 }}>
+            <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleProfile}>My profile</li>
             {role == 'User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleMyBookings}>My Bookings</li>}
             {role == 'User' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleHelp}>Help</li>}
             {role == 'Admin' && <li style={{ padding: '8px 16px', cursor: 'pointer' }} onClick={handleUserQueries}>Queries</li>}
