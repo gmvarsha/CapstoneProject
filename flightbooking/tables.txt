@@ -23,12 +23,21 @@ price DECIMAL(10, 2) NOT NULL
 
 
 
-INSERT INTO flights (source, destination, flight_number, departure_date, departure_time, arrival_date, arrival_time, price) VALUES
-('Mumbai', 'Delhi', 'AI101', '2024-07-20', '10:00:00', '2024-07-20', '12:00:00', 5000.00),
-('Mumbai', 'Delhi', 'AI102', '2024-07-20', '14:00:00', '2024-07-20', '16:00:00', 5000.00),
-('Bangalore', 'Hyderabad', 'AI201', '2024-07-20', '08:00:00', '2024-07-20', '09:30:00', 3000.00),
-('Hyderabad', 'Bangalore', 'AI202', '2024-07-20', '18:00:00', '2024-07-20', '19:30:00', 3000.00),
-('Chennai', 'Kolkata', 'AI301', '2024-07-21', '09:00:00', '2024-07-21', '12:00:00', 4000.00),
-('Kolkata', 'Chennai', 'AI302', '2024-07-21', '13:00:00', '2024-07-21', '16:00:00', 4000.00),
-('Pune', 'Ahmedabad', 'AI401', '2024-07-22', '06:00:00', '2024-07-22', '08:00:00', 3500.00),
-('Ahmedabad', 'Pune', 'AI402', '2024-07-22', '20:00:00', '2024-07-22', '22:00:00', 3500.00);
+
+INSERT INTO flights (source, destination, flight_number, departure_date, departure_time, arrival_date, arrival_time, stops, seats, flight_type, price) VALUES
+('Mumbai', 'Delhi', 'AI201', '2024-07-25', '08:30:00', '2024-07-25', '11:00:00', 'Non-stop', 150, 'Commercial', 250.00),
+('Delhi', 'Bangalore', '6E302', '2024-07-25', '12:15:00', '2024-07-25', '15:45:00', 'Single stop', 180, 'Commercial', 320.00),
+('Bangalore', 'Hyderabad', 'SG403', '2024-07-26', '09:45:00', '2024-07-26', '11:15:00', 'Non-stop', 160, 'Commercial', 180.00),
+('Hyderabad', 'Chennai', 'AI504', '2024-07-26', '14:30:00', '2024-07-26', '16:45:00', 'Two stops', 170, 'Commercial', 420.00),
+('Chennai', 'Kolkata', '6E605', '2024-07-27', '10:00:00', '2024-07-27', '12:45:00', 'Non-stop', 180, 'Commercial', 200.00),
+('Kolkata', 'Pune', 'SG706', '2024-07-27', '16:00:00', '2024-07-27', '18:15:00', 'Single stop', 190, 'Commercial', 310.00),
+('Pune', 'Ahmedabad', 'AI807', '2024-07-28', '11:45:00', '2024-07-28', '13:30:00', 'Non-stop', 200, 'Commercial', 260.00),
+('Ahmedabad', 'Mumbai', '6E908', '2024-07-28', '13:30:00', '2024-07-28', '16:15:00', 'Single stop', 210, 'Commercial', 290.00),
+('Mumbai', 'Delhi', 'AI1009', '2024-07-29', '15:15:00', '2024-07-29', '18:45:00', 'Two stops', 220, 'Commercial', 480.00),
+('Delhi', 'Bangalore', '6E1110', '2024-07-29', '17:45:00', '2024-07-29', '20:30:00', 'Non-stop', 230, 'Commercial', 360.00),
+('Mumbai', 'Goa', 'SG001', '2024-07-25', '09:00:00', '2024-07-25', '10:30:00', 'Non-stop', 50, 'Charter', 800.00),
+('Delhi', 'Jaipur', 'AI002', '2024-07-25', '11:00:00', '2024-07-25', '12:15:00', 'Non-stop', 60, 'Charter', 900.00),
+('Bangalore', 'Chennai', '6E003', '2024-07-26', '14:30:00', '2024-07-26', '15:45:00', 'Non-stop', 40, 'Charter', 700.00),
+('Hyderabad', 'Vizag', 'SG004', '2024-07-26', '16:00:00', '2024-07-26', '17:30:00', 'Non-stop', 30, 'Charter', 600.00),
+('Chennai', 'Coimbatore', 'AI005', '2024-07-27', '08:00:00', '2024-07-27', '09:15:00', 'Non-stop', 20, 'Charter', 500.00);
+
