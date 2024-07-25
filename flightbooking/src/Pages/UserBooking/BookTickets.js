@@ -86,7 +86,7 @@ const BookTickets = () => {
             console.log(formData)
             if (formData.first_name)
                 setPassengers((prevData) => {
-                    formData.flightId = flight.id
+                    formData.flightId = flight.flightId
                     formData.checked_in = 0
                     const updatedPassengers = [...prevData, formData]
                     console.log(updatedPassengers)
@@ -138,7 +138,7 @@ const BookTickets = () => {
                 userId: localStorage.getItem('userId')
             },
             flight: {
-                flightId: flight.id
+                flightId: flight.flightId
             },
             passengerDetails: pass,
             // booking_date:flight.
@@ -156,7 +156,7 @@ const BookTickets = () => {
             )
             if (response.status == 201) {
                 setSuccessMessage(response.data)
-                setInterval(() => {
+                setTimeout(() => {
                     navigate('/user/myBookings')
                 }, 2000)
 

@@ -76,7 +76,7 @@ const MyBookings = () => {
 
 
             <div  >
-                <h2> Booking Details for userId: {localStorage.getItem('userId')}</h2>
+                <h2> Booking Details</h2>
                 {flightData.map((booking) => (
                     <div key={booking.bookingId} style={{
                         background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',

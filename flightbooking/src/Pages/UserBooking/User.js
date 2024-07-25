@@ -81,6 +81,8 @@ const UserBooking = () => {
 
     try {
       setLoading(true);
+      
+      // const response = await axios.get('http://localhost:5000/flights')
 
       const response = await axios.get('http://localhost:8080/flights/getflights', {
         params: {
@@ -89,6 +91,7 @@ const UserBooking = () => {
           departureDate: travelDate
         }
       });
+      console.log(response.data)
       if (response.data) {
         setLoading(false);
         setFlights(response.data);
