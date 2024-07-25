@@ -5,6 +5,8 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { IoHome, IoPerson } from 'react-icons/io5';
+
 
 const CustomNavbar = ({ role }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -47,17 +49,17 @@ const CustomNavbar = ({ role }) => {
     <div>
       <Navbar bg="dark" variant="dark">
         <Container fluid>
-          <Navbar.Brand href="#home" className="ms-0 me-auto" onClick={handleHomeIcon}>
-            SwayAirApp
-            </Navbar.Brand>
+          <Navbar.Brand href="#home" className="ms-0 me-auto" >
+            <IoHome size={20} className="mb-2 ms-auto" color="#FFFFFF" onClick={handleHomeIcon}/>&nbsp;&nbsp;
+            <span style={{ color: '#FFFFFF' }}><b>SwayAirLinesApp</b></span>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <Nav.Link style={{ color: "white" }} onClick={handleMenuToggle}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
-                  <div style={{ width: '15px', height: '2px', backgroundColor: 'white', margin: '2px 0' }}></div>
+                <div style={{ marginLeft: '15rem' }}> {/* move Profile icon to right */}
+                  <IoPerson size={30} color="#FFFFFF" />
                 </div>
               </Nav.Link>
             </Nav>
