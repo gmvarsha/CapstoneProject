@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Navbar, Nav, Modal, Form } from 'react-bootstrap';
+import { Container, Table, Button, Navbar, Nav, Modal, Form, Card, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Loading from '../../components/Loading/Loading';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import CustomNavbar from '../../components/Navbar';
+import flight from '../../flight2.jpg';
 
 const UserBooking = () => {
   const [sourceCity, setSourceCity] = useState('');
@@ -119,68 +120,68 @@ const UserBooking = () => {
   return (
           <div style={{
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
-      minHeight: '91vh',
+      minHeight: '100vh',
       color: '#000',
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     }}>
       <CustomNavbar role='User' />
 
       <Container className="py-4">
-        <h2 className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Search for Flights</h2>
+        <Card className="p-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <h2 className="text-center mb-4" style={{ fontSize: '1.5rem' }}>Search for Flights</h2>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Row>
+                <Col>
+                  <Form.Label><b>Source City:</b></Form.Label>
+                  <Form.Select
+                    value={sourceCity}
+                    onChange={(e) => setSourceCity(e.target.value)}
+                    required
+                  >
+                    <option value="">Select a source city</option>
+                    {cities.map((city, index) => (
+                      <option key={index} value={city}>{city}</option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label><b>Destination City:</b></Form.Label>
+                  <Form.Select
+                    value={destinationCity}
+                    onChange={(e) => setDestinationCity(e.target.value)}
+                    required
+                  >
+                    <option value="">Select a destination city</option>
+                    {cities.map((city, index) => (
+                      <option key={index} value={city}>{city}</option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label><b>Travel Date:</b></Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={travelDate}
+                    min={today}
+                    onChange={handleTravelDateChange}
+                    required
+                  />
+                </Col>
+              </Row>
+            </Form.Group>
 
-        <form onSubmit={handleSubmit} className="mb-4">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-4 mb-3">
-              <label htmlFor="sourceCity" className="form-label">Source City:</label>
-              <select
-                id="sourceCity"
-                className="form-select"
-                value={sourceCity}
-                onChange={(e) => setSourceCity(e.target.value)}
-                required
-              >
-                <option value="">Select a source city</option>
-                {cities.map((city, index) => (
-                  <option key={index} value={city}>{city}</option>
-                ))}
-              </select>
+            {error && <p className="text-danger">{error}</p>}
+
+            <div className="text-center">
+              <Button type="submit" variant="primary">Search Flights</Button>
             </div>
+          </Form>
 
-            <div className="col-12 col-md-4 mb-3">
-              <label htmlFor="destinationCity" className="form-label">Destination City:</label>
-              <select
-                id="destinationCity"
-                className="form-select"
-                value={destinationCity}
-                onChange={(e) => setDestinationCity(e.target.value)}
-                required
-              >
-                <option value="">Select a destination city</option>
-                {cities.map((city, index) => (
-                  <option key={index} value={city}>{city}</option>
-                ))}
-              </select>
-            </div>
+        </Card>
 
-            <div className="col-12 col-md-4 mb-3">
-              <label htmlFor="travelDate" className="form-label">Travel Date:</label>
-              <input
-                type="date"
-                id="travelDate"
-                className="form-control"
-                value={travelDate}
-                min={today}
-                onChange={handleTravelDateChange}
-                required
-              />
-            </div>
-          </div>
-
-          {error && <p className="text-danger">{error}</p>}
-
-          <div className="text-center">
-            <button type="submit" className="btn btn-primary">Search Flights</button>
-          </div>
-        </form>
 
         {loading && <Loading />}
 

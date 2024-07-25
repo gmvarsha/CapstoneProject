@@ -4,6 +4,7 @@ import { Container, Table, Button, Navbar, Nav, Alert, Modal, Form, Row, Col } f
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import CustomNavbar from '../../components/Navbar';
+import flight from '../../flight2.jpg'
 
 const AdminHome = () => {
   const [flights, setFlights] = useState([]);
@@ -177,6 +178,9 @@ const AdminHome = () => {
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
       minHeight: '100vh',
       color: '#000',
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     }}>
 
       <CustomNavbar role='Admin' />

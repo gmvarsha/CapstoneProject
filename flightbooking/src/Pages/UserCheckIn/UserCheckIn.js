@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-
+import flight from '../../flight2.jpg'
 const UserCheckIn = () => {
     const [bookings, setBookings] = useState([]);
     const [selectedPassengers, setSelectedPassengers] = useState([]);
@@ -142,6 +142,9 @@ const UserCheckIn = () => {
             background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
             minHeight: '100vh',
             color: '#000',
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${flight})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
           }}>    
             <CustomNavbar role='User' />
             
