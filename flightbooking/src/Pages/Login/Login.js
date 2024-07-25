@@ -40,6 +40,9 @@ const Login = () => {
 
       localStorage.setItem('userId', response.data.userId);
       localStorage.setItem('userRole', response.data.role);
+      localStorage.setItem('firstName', response.data.firstName);
+      localStorage.setItem('lastName', response.data.lastName);
+      localStorage.setItem('email', response.data.email);
 
     } catch (error) {
       setLoading(false);

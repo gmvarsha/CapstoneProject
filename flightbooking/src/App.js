@@ -18,12 +18,13 @@ import MyBookings from './Pages/UserBooking/MyBookings.js';
 
 import AdminCheckIn from './Pages/AdminCheckIn/AdminCheckIn.js';
 import Chatbot from './components/Chatbot.js';
+import ProfilePage from './Pages/Profile.js';
 
 function App() {
   return (
   
     <Router>
-      <div className="App">
+      <div className="App"  >
         <Chatbot></Chatbot>
         <Routes>
           <Route path='/' element={<Login/>}/>
@@ -31,9 +32,9 @@ function App() {
           <Route path="/user/signup" element={<UserSignUp/>} />
          {/* <Route path="/user/dashboard" element={<Dashboard/>} /> */}
          <Route path="/user/userbooking" element={<ProtectedRoute element={<UserBooking />} requiredRole="User" />} />
-         <Route path="/user/bookFlight" element={<ProtectedRoute element={<Booking />} requiredRole="User" />}/>
-         <Route path="/user/myBookings" element={<ProtectedRoute element={<MyBookings />} requiredRole="User" />}/>
-
+          <Route path="/user/bookFlight" element={<ProtectedRoute element={<Booking />} requiredRole="User" />}/>
+          <Route path="/user/myBookings" element={<ProtectedRoute element={<MyBookings />} requiredRole="User" />}/>
+          <Route path="/user/profile" element={<ProfilePage />}/>
           <Route path="/admin/adminhome" element={<ProtectedRoute element={<AdminHome />}  requiredRole="Admin" />} />
           <Route path="/user/help" element={<ProtectedRoute element={<UserQuery />}  requiredRole="User" />} />
           <Route path="/admin/queries" element={<ProtectedRoute element={<AdminReply />}  requiredRole="Admin" />}/>
