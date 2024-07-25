@@ -229,7 +229,7 @@ const UserCheckIn = () => {
    
         </div>
          <footer className="userQuery-footer">
-         <p>&copy; 2024 Flight Web-CheckIn</p>
+         <p>&copy; 2024 SwayAirApp. All rights reserved.</p>
        </footer>
        </div>
     );
