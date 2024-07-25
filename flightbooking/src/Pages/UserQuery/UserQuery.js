@@ -138,7 +138,7 @@ const UserQuery = () => {
       </div>
 
       <footer className="userQuery-footer">
-        <p>&copy; 2024 Flight Booking Support</p>
+        <p>&copy; 2024 SwayAirApp. All rights reserved.</p>
       </footer>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>

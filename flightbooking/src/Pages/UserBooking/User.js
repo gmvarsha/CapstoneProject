@@ -30,7 +30,7 @@ const UserBooking = () => {
 
   const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'];
   const stops = ['Non-stop', 'Single stop', 'Two stops']
-  const flightTypes = ["Type1", 'Type2']
+  const flightTypes = ["Commercial", 'Charter']
   const handleTravelDateChange = (event) => {
     setTravelDate(event.target.value);
   };
@@ -76,6 +76,8 @@ const UserBooking = () => {
 
     if (sourceCity === destinationCity) {
       setError('Source and destination cannot be the same.');
+      setTimeout(() => setError(''), 3000)
+
       return;
     }
 
@@ -115,9 +117,9 @@ const UserBooking = () => {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div style={{
+          <div style={{
       background: 'linear-gradient(to bottom right, #f7c6c5, #fff)',
-      minHeight: '100vh',
+      minHeight: '91vh',
       color: '#000',
     }}>
       <CustomNavbar role='User' />
@@ -341,8 +343,19 @@ const UserBooking = () => {
         </Modal.Body>
       </Modal>
 
-
+      <footer style={{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        textAlign: 'center',
+        padding: '10px 0',
+      }}>
+        <p style={{ margin: 0 ,'color': '#fff'}}>&copy; 2024 SwayAirApp. All rights reserved.</p>
+      </footer>
     </div>
+    
   );
 };
 
