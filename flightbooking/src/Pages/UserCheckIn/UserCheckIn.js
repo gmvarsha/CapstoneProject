@@ -175,7 +175,7 @@ const UserCheckIn = () => {
                             <h5 className="card-title">Flight: {booking.flight.flightNumber} - {booking.flight.flightName}</h5>
                             <p className="card-text">Source: {booking.flight.source}</p>
                             <p className="card-text">Destination: {booking.flight.destination}</p>
-                            <p className="card-text">Scheduled Date: {booking.flight.flightScheduledDate}</p>
+                            <p className="card-text">Scheduled Date: {booking.flight.departureDate}</p>
                             <Collapse in={openBookingId === booking.bookingId}>
                             <div>
                                     <div className="d-flex justify-content-end mb-3">
